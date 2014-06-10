@@ -25,15 +25,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-function getUrl() {
+function v_getUrl() {
   $url  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://'.$_SERVER["SERVER_NAME"] : 'https://'.$_SERVER["SERVER_NAME"];
   $url .= $_SERVER["REQUEST_URI"];
   return $url;
 }
-function lockdown() {
-  if( !is_user_logged_in() && getUrl() != wp_login_url() ) {
+function v_forcelogin() {
+  if( !is_user_logged_in() && v_getUrl() != wp_login_url() ) {
     wp_redirect( wp_login_url(), 302 );
     exit();
   }
 }
-add_action('init', 'lockdown');
+add_action('init', 'v_forcelogin');
