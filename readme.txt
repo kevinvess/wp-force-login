@@ -1,9 +1,9 @@
 === Force Login ===
 Contributors: kevinvess
-Tags: force user login, login, private, privacy, protected
-Requires at least: 2.0
+Tags: force user login, login, private, privacy, protected, hidden
+Requires at least: 3.6
 Tested up to: 3.9.1
-Stable tag: trunk
+Stable tag: 1.1
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -19,3 +19,9 @@ Make your website private until it's ready to share publicly, or keep it private
 Upload the Force Login plugin to your site, then Activate it.
 
 1, 2: You're done!
+
+== Changelog ==
+
+= 1.1 =
+
+* Whitelisted the Registration page and the Lost Password page - props [jabdo](http://profiles.wordpress.org/jabdo).
