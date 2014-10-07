@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin
 Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
 Requires at least: 2.7
 Tested up to: 4.0
-Stable tag: 1.3
+Stable tag: 2.0
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -26,6 +26,9 @@ Upload the Force Login plugin to your site, then Activate it.
 
 == Changelog ==
 
+= 2.0 =
+* Added redirect to send user to the url they tried to visit after logging in.
+
 = 1.3 =
 * Fixed password reset url from being blocked - props [estebillan](http://profiles.wordpress.org/estebillan).
 
@@ -37,6 +40,9 @@ Upload the Force Login plugin to your site, then Activate it.
 
 
 == Upgrade Notice ==
+
+= 2.0 =
+New feature: added redirect to send user to the url they tried to visit after logging in.
 
 = 1.3 =
 Fixes bug with password reset url from being blocked. Props estebillan.

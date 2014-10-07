@@ -10,6 +10,9 @@ Upload the Force Login plugin to your site, then Activate it.
 
 ## Changelog ##
 
+= 2.0 =
+* Added redirect to send user to the url they tried to visit after logging in.
+
 = 1.3 =
 * Fixed password reset url from being blocked - props [estebillan](http://profiles.wordpress.org/estebillan).
 
