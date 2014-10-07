@@ -10,10 +10,11 @@ Upload the Force Login plugin to your site, then Activate it.
 
 ## Changelog ##
 
-= 1.2 =
+= 1.3 =
+* Fixed password reset url from being blocked - props [estebillan](http://profiles.wordpress.org/estebillan).
 
+= 1.2 =
 * Streamlined code
 
 = 1.1 =
-
 * Whitelisted the Registration page and the Lost Password page - props [jabdo](http://profiles.wordpress.org/jabdo).
