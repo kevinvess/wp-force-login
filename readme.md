@@ -1,30 +1,29 @@
-# Force Login
+# Force Login #
 
 Force Login is a simple lightweight WordPress plugin that requires visitors to log in as a registered user to interact with the website. As simple as flipping a switch.
 
 Make your website private until it's ready to share publicly, or keep it private for members only.
 
-## Installation ##
+Here, you can browse the source of the [Force Login Plugin](https://wordpress.org/plugins/wp-force-login/) project, find and discuss open issues or contribute code to the plugin yourself.
 
-Upload the Force Login plugin to your site, then Activate it.
+Installation
+------------
 
-1, 2: You're done!
+Here's a [guide on how to install the plugin in your WordPress site](https://wordpress.org/plugins/wp-force-login/installation/).
+If you want to run the latest development version, you have two options:
 
-__Requires WordPress Version: 2.7 or higher__
+* You can download the repository .zip file: [force-login.zip](https://github.com/kevinvess/wp-force-login/archive/master.zip)
+* You can clone the GitHub repository using Git
 
-## Changelog ##
+This will download the latest development version of the Force Login plugin. While this version is usually stable,
+it is not recommended for use in a production environment.
 
-= 2.1 =
-* Rewrote v_getUrl function to include the server port - props [Nicolas](http://profiles.wordpress.org/nottavi).
+Bugs
+----
 
-= 2.0 =
-* Added redirect to send user to the url they tried to visit after logging in.
+If you think you've found a bug, [please raise an issue here](https://github.com/kevinvess/wp-force-login/issues?state=open)!
 
-= 1.3 =
-* Fixed password reset url from being blocked - props [estebillan](http://profiles.wordpress.org/estebillan).
-
-= 1.2 =
-* Streamlined code
-
-= 1.1 =
-* Whitelisted the Registration page and the Lost Password page - props [jabdo](http://profiles.wordpress.org/jabdo).
+Support
+-------
+This is a developer's portal for the Force Login plugin and should not be used for support. Please visit the
+[Force Login support forum on WordPress.org](https://wordpress.org/support/plugin/wp-force-login).
