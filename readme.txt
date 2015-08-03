@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin
 Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
 Requires at least: 2.7
 Tested up to: 4.2
-Stable tag: 3.1
+Stable tag: 3.2
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -76,6 +76,9 @@ add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 
 
 == Changelog ==
+
+= 3.2 =
+- Streamlined - removed v_getUrl function to reduce possible duplicates of global functions - props [johappel](https://github.com/johappel).
 
 = 3.1 =
 - Rewrote v_getUrl function to use HTTP_HOST instead of SERVER_NAME - props [Arlen22](https://github.com/Arlen22).

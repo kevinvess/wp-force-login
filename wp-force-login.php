@@ -3,7 +3,7 @@
 Plugin Name: Force Login
 Plugin URI: http://vess.me/
 Description: Easily hide your WordPress site from public viewing by requiring visitors to log in first. Activate to turn on.
-Version: 3.1
+Version: 3.2
 Author: Kevin Vess
 Author URI: http://vess.me/
 License: GPLv2 or later
@@ -25,18 +25,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-function v_getUrl() {
-  $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
-  $url .= '://' . $_SERVER['HTTP_HOST'];
-  $url .= in_array( $_SERVER['SERVER_PORT'], array('80', '443') ) ? '' : ':' . $_SERVER['SERVER_PORT'];
-  $url .= $_SERVER['REQUEST_URI'];
-  return $url;
-}
 function v_forcelogin() {
   if( !is_user_logged_in() ) {
-    $url = v_getUrl();
+    // Get URL
+    $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
+    $url .= '://' . $_SERVER['HTTP_HOST'];
+    $url .= in_array( $_SERVER['SERVER_PORT'], array('80', '443') ) ? '' : ':' . $_SERVER['SERVER_PORT'];
+    $url .= $_SERVER['REQUEST_URI'];
+
+    // Apply filters
     $whitelist = apply_filters('v_forcelogin_whitelist', array());
     $redirect_url = apply_filters('v_forcelogin_redirect', $url);
+
+    // Redirect visitors
     if( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) ) {
       wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit();
     }
