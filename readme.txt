@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin
 Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
 Requires at least: 2.7
 Tested up to: 4.2
-Stable tag: 3.0
+Stable tag: 3.1
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -66,17 +66,19 @@ You can specify an array of URLs to whitelist by adding the following filter to 
  *
  * @return array An array of URLs. Must be absolute.
  **/
-function my_forcelogin_whitelist() {
-  return array(
-    site_url( '/mypage/' ),
-    site_url( '/2015/03/post-title/' )
-  );
+function my_forcelogin_whitelist( $whitelist ) {
+  $whitelist[] = site_url( '/mypage/' );
+  $whitelist[] = site_url( '/2015/03/post-title/' );
+  return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 `
 
 
 == Changelog ==
+
+= 3.1 =
+- Rewrote v_getUrl function to use HTTP_HOST instead of SERVER_NAME - props [Arlen22](https://github.com/Arlen22).
 
 = 3.0 =
 - Added hook to set a specific URL to redirect to on login.
