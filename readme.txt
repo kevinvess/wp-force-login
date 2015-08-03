@@ -42,7 +42,7 @@ Upload the Force Login plugin to your site, then Activate it.
 
 By default, the plugin sends visitors back to the URL they tried to visit. However, you can set a specific URL to always redirect users to by adding the following filter to your functions.php file.
 
-The URL must be absolute (as in, http://example.com/mypage/). Recommended: site_url( '/mypage/' ).
+The URL must be absolute (as in, `http://example.com/mypage/`). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
 
 `
 /**
@@ -58,7 +58,7 @@ add_filter('v_forcelogin_redirect', 'my_forcelogin_redirect', 10, 1);
 
 = How can I add exceptions for certain pages or posts? =
 
-You can specify an array of URLs to whitelist by adding the following filter to your functions.php file. Each URL must be absolute (as in, http://example.com/mypage/). Recommended: site_url( '/mypage/' ).
+You can specify an array of URLs to whitelist by adding the following filter to your functions.php file. Each URL must be absolute (as in, `http://example.com/mypage/`). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
 
 `
 /**
@@ -69,6 +69,23 @@ You can specify an array of URLs to whitelist by adding the following filter to 
 function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/mypage/' );
   $whitelist[] = site_url( '/2015/03/post-title/' );
+  return $whitelist;
+}
+add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
+`
+
+= How do I get the WordPress mobile app to work? =
+
+By default, the plugin blocks access to all page URLs; you will need to whitelist the XML-RPC page to allow the WordPress app to access your site for remote publishing.
+
+`
+/**
+ * Filter Force Login to allow exceptions for specific URLs.
+ *
+ * @return array An array of URLs. Must be absolute.
+ **/
+function my_forcelogin_whitelist( $whitelist ) {
+  $whitelist[] = site_url( '/xmlrpc.php' );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
