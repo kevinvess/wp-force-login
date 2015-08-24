@@ -42,7 +42,7 @@ Upload the Force Login plugin to your site, then Activate it.
 
 By default, the plugin sends visitors back to the URL they tried to visit. However, you can set a specific URL to always redirect users to by adding the following filter to your functions.php file.
 
-The URL must be absolute (as in, `http://example.com/mypage/`). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
+The URL must be absolute (as in, http://example.com/mypage/). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
 
 `
 /**
@@ -58,7 +58,7 @@ add_filter('v_forcelogin_redirect', 'my_forcelogin_redirect', 10, 1);
 
 = How can I add exceptions for certain pages or posts? =
 
-You can specify an array of URLs to whitelist by adding the following filter to your functions.php file. Each URL must be absolute (as in, `http://example.com/mypage/`). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
+You can specify an array of URLs to whitelist by adding the following filter to your functions.php file. Each URL must be absolute (as in, http://example.com/mypage/). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
 
 `
 /**
@@ -121,6 +121,9 @@ add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 
 
 == Upgrade Notice ==
+
+= 3.2 =
+Removed function v_getUrl.
 
 = 3.0 =
 New features: added developer hooks for customizing the plugin.
