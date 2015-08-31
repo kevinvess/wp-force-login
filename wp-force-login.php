@@ -43,4 +43,7 @@ function v_forcelogin() {
     }
   }
 }
-add_action('init', 'v_forcelogin');
+    
+if (!(defined('WP_CLI') && WP_CLI)) {
+  add_action('init', 'v_forcelogin');
+}
