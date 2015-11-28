@@ -27,10 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 function v_forcelogin() {
   if( !is_user_logged_in() ) {
-    // Get URL
-    $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
-    $url .= '://' . $_SERVER['HTTP_HOST'];
-    $url .= in_array( $_SERVER['SERVER_PORT'], array('80', '443') ) ? '' : ':' . $_SERVER['SERVER_PORT'];
+    // Get URL from wordpress
+    $url  = get_site_url();
     $url .= $_SERVER['REQUEST_URI'];
 
     // Apply filters
