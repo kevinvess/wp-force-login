@@ -40,6 +40,7 @@ function v_forcelogin() {
     // Apply filters
     $whitelist = apply_filters('v_forcelogin_whitelist', array());
     $redirect_url = apply_filters('v_forcelogin_redirect', $url);
+    $url = apply_filters('v_forcelogin_cleanup_url', $url);
 
     // Redirect visitors
     if( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) ) {
