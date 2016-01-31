@@ -3,8 +3,8 @@ Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin%40vess%2eme&lc=US&item_name=Kevin%20Vess%20-%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
 Requires at least: 2.7
-Tested up to: 4.2
-Stable tag: 3.2
+Tested up to: 4.4
+Stable tag: 3.3
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -38,7 +38,7 @@ Upload the Force Login plugin to your site, then Activate it.
 
 == Frequently Asked Questions ==
 
-= How can I specify a URL to redirect to on login? =
+= 1. How can I specify a URL to redirect to on login? =
 
 By default, the plugin sends visitors back to the URL they tried to visit. However, you can set a specific URL to always redirect users to by adding the following filter to your functions.php file.
 
@@ -56,7 +56,7 @@ function my_forcelogin_redirect() {
 add_filter('v_forcelogin_redirect', 'my_forcelogin_redirect', 10, 1);
 `
 
-= How can I add exceptions for certain pages or posts? =
+= 2. How can I add exceptions for certain pages or posts? =
 
 You can specify an array of URLs to whitelist by adding the following filter to your functions.php file. Each URL must be absolute (as in, http://example.com/mypage/). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
 
@@ -74,7 +74,7 @@ function my_forcelogin_whitelist( $whitelist ) {
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 `
 
-= How do I get the WordPress mobile app to work? =
+= 3. How do I get the WordPress mobile app to work? =
 
 By default, the plugin blocks access to all page URLs; you will need to whitelist the XML-RPC page to allow the WordPress app to access your site for remote publishing.
 
@@ -93,6 +93,9 @@ add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 
 
 == Changelog ==
+
+= 3.3 =
+- Fix - Check for existence of explicit port number before appending port - props [Björn Ali Göransson](https://github.com/bjorn-ali-goransson).
 
 = 3.2 =
 - Streamlined - removed v_getUrl function to reduce possible duplicates of global functions - props [johappel](https://github.com/johappel).
