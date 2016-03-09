@@ -28,8 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 function v_forcelogin() {
   if( !is_user_logged_in() ) {
     // Exception for cron or ajax requests
-    if( defined('DOING_CRON') || defined( 'DOING_AJAX' ) )
+    if ( ( defined( 'DOING_CRON' ) && DOING_CRON ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
       return FALSE;
+    }
 
     // Get URL
     $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
