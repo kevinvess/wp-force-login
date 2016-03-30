@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin
 Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
 Requires at least: 2.7
 Tested up to: 4.4
-Stable tag: 4.0
+Stable tag: 4.1
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -81,8 +81,7 @@ Some URLs have unique query strings appended to the end of it, which is composed
 For example:
 <http://example.com/mypage/?parameter=value>
 
-Checkout the Force Login Wiki on GitHub for examples of the different methods for whitelisting dynamic URLs:
-<https://github.com/kevinvess/wp-force-login/wiki/Whitelist-Dynamic-URLs>
+Checkout the [Force Login Wiki on GitHub](https://github.com/kevinvess/wp-force-login/wiki/Whitelist-Dynamic-URLs) for examples of the different methods for whitelisting dynamic URLs.
 
 
 = 4. How do I get the WordPress mobile app to work? =
@@ -104,6 +103,9 @@ add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 
 
 == Changelog ==
+
+= 4.1 =
+* Fix - Multisite 'Super Admin' users do not need assigned sites to access the network.
 
 = 4.0 =
 * Feature - Added exceptions for AJAX, Cron and WP-CLI requests.
@@ -139,6 +141,9 @@ add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 
 
 == Upgrade Notice ==
+
+= 4.1 =
+Multisite users can only access their assigned sites, except 'Super Admin' users.
 
 = 4.0 =
 New feature: added exceptions for AJAX, Cron, and WP-CLI requests. Fix: Multisite users can only access their assigned sites.
