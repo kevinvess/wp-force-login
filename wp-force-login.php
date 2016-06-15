@@ -62,3 +62,10 @@ function v_forcelogin() {
   }
 }
 add_action('init', 'v_forcelogin');
+
+function v_forcelogin_hide_back_to_blog() { ?>
+  <style type="text/css">
+    #backtoblog { display: none; }
+  </style>
+<?php }
+add_action('login_enqueue_scripts', 'v_forcelogin_hide_back_to_blog');
