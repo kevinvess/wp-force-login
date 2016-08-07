@@ -3,8 +3,8 @@ Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin%40vess%2eme&lc=US&item_name=Kevin%20Vess%20-%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
 Requires at least: 2.7
-Tested up to: 4.5
-Stable tag: 4.1
+Tested up to: 4.6
+Stable tag: 4.2
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -83,7 +83,6 @@ For example:
 
 Checkout the [Force Login Wiki on GitHub](https://github.com/kevinvess/wp-force-login/wiki/Whitelist-Dynamic-URLs) for examples of the different methods for whitelisting dynamic URLs.
 
-
 = 4. How do I get the WordPress mobile app to work? =
 
 By default, the plugin blocks access to all page URLs; you will need to whitelist the XML-RPC page to allow the WordPress app to access your site for remote publishing.
@@ -101,8 +100,25 @@ function my_forcelogin_whitelist( $whitelist ) {
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 `
 
+= 5. How do I hide the "← Back to {sitename}" link on the login screen? =
+
+The WordPress login screen includes a "← Back to {sitename}" link below the login form; which may not actually take you back to the site while Force Login is activated. You can hide this link by adding the following action to your functions.php file.
+
+**Requires:** WordPress 2.5 or higher
+
+`
+// Hide the 'Back to {sitename}' link on the login screen.
+function my_forcelogin_hide_backtoblog() {
+  echo '<style type="text/css">#backtoblog{display:none;}</style>';
+}
+add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
+`
+
 
 == Changelog ==
+
+= 4.2 =
+* Tweak - Made plugin translation ready.
 
 = 4.1 =
 * Fix - Multisite 'Super Admin' users do not need assigned sites to access the network.

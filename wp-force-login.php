@@ -6,6 +6,10 @@ Description: Easily hide your WordPress site from public viewing by requiring vi
 Version: 4.1
 Author: Kevin Vess
 Author URI: http://vess.me/
+
+Text Domain: wp-force-login
+Domain Path: /languages
+
 License: GPLv2 or later
 */
 
@@ -57,7 +61,7 @@ function v_forcelogin() {
     if ( function_exists('is_multisite') && is_multisite() ) {
       global $current_user; get_currentuserinfo();
       if ( !is_user_member_of_blog( $current_user->ID ) && !is_super_admin() )
-        wp_die( __( "You're not authorized to access this site." ), __( get_option('blogname') . ' &rsaquo; Error' ) );
+        wp_die( __( "You're not authorized to access this site.", 'wp-force-login' ), get_option('blogname') . ' &rsaquo; ' . __( "Error", 'wp-force-login' ) );
     }
   }
 }
