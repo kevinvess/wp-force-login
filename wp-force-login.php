@@ -48,11 +48,12 @@ function v_forcelogin() {
     $url .= $_SERVER['REQUEST_URI'];
 
     // Apply filters
+    $bypass = apply_filters ( 'v_forcelogin_bypass', false );
     $whitelist = apply_filters( 'v_forcelogin_whitelist', array() );
     $redirect_url = apply_filters( 'v_forcelogin_redirect', $url );
 
     // Redirect visitors
-    if ( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) ) {
+    if ( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) && !$bypass ) {
       wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit();
     }
   }
