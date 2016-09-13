@@ -60,7 +60,7 @@ function v_forcelogin() {
   else {
     // Only allow Multisite users access to their assigned sites
     if ( function_exists('is_multisite') && is_multisite() ) {
-      global $current_user; get_currentuserinfo();
+      $current_user = wp_get_current_user();
       if ( !is_user_member_of_blog( $current_user->ID ) && !is_super_admin() )
         wp_die( __( "You're not authorized to access this site.", 'wp-force-login' ), get_option('blogname') . ' &rsaquo; ' . __( "Error", 'wp-force-login' ) );
     }
