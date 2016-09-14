@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin
 Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
 Requires at least: 2.7
 Tested up to: 4.6
-Stable tag: 4.2
+Stable tag: 5.0
 License: GPLv2 or later
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
@@ -117,6 +117,11 @@ add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
 
 == Changelog ==
 
+= 5.0 =
+* Feature - Added filter to bypass Force Login redirect for whitelisting pages without specifying a URL.
+* Tweak - Changed the hook for Force Login to run at a later stage in the WordPress tree.
+* Fix - Replaced deprecated function - props [Just-Johnny](https://github.com/Just-Johnny).
+
 = 4.2 =
 * Tweak - Made plugin translation ready.
 
@@ -157,6 +162,9 @@ add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
 
 
 == Upgrade Notice ==
+
+= 5.0 =
+New feature: added bypass filter. Tweak: changed hook for Force Login to run later.
 
 = 4.1 =
 Multisite users can only access their assigned sites, except 'Super Admin' users.
