@@ -66,4 +66,4 @@ function v_forcelogin() {
     }
   }
 }
-add_action('init', 'v_forcelogin');
+add_action('template_redirect', 'v_forcelogin');
