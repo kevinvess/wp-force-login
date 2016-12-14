@@ -1,9 +1,9 @@
 === Force Login ===
 Contributors: kevinvess
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kevin%40vess%2eme&lc=US&item_name=Kevin%20Vess%20-%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
-Tags: access, closed, force user login, hidden, login, password, privacy, private, protected, registered only, restricted
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
+Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 2.7
-Tested up to: 4.6
+Tested up to: 4.7
 Stable tag: 5.0
 License: GPLv2 or later
 
@@ -21,8 +21,9 @@ Make your website private until it's ready to share publicly, or keep it private
 - WordPress Multisite compatible.
 - Login redirects visitors back to the url they tried to visit.
 - Extensive Developer API (hooks & filters).
-- Customizable. Set a specific URL to always redirect to on login
+- Customizable. Set a specific URL to always redirect to on login.
 - Filter exceptions for certain pages or posts.
+- Translation Ready & WPML certified.
 
 **Bug Reports**
 
@@ -49,7 +50,7 @@ The URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [si
  * Set the URL to redirect to on login.
  *
  * @return string URL to redirect to on login. Must be absolute.
- **/
+ */
 function my_forcelogin_redirect() {
   return site_url( '/mypage/' );
 }
@@ -58,14 +59,35 @@ add_filter('v_forcelogin_redirect', 'my_forcelogin_redirect', 10, 1);
 
 = 2. How can I add exceptions for certain pages or posts? =
 
-You can specify an array of URLs to whitelist by adding the following filter to your functions.php file. Each URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
+You can bypass Force Login based on any condition or specify an array of URLs to whitelist by adding either of the following filters to your functions.php file. You may also use the WordPress [Conditional Tags](http://codex.wordpress.org/Conditional_Tags).
+
+**Bypass Force Login**
+
+`
+/**
+ * Bypass Force Login to allow for exceptions.
+ *
+ * @return bool Whether to disable Force Login. Default false.
+ */
+function my_forcelogin_bypass( $bypass ) {
+  if ( is_single() ) {
+    $bypass = true;
+  }
+  return $bypass;
+}
+add_filter('v_forcelogin_bypass', 'my_forcelogin_bypass', 10, 1);
+`
+
+**Whitelist URLs**
+
+Each URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
 
 `
 /**
  * Filter Force Login to allow exceptions for specific URLs.
  *
  * @return array An array of URLs. Must be absolute.
- **/
+ */
 function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/mypage/' );
   $whitelist[] = site_url( '/2015/03/post-title/' );
@@ -85,14 +107,14 @@ Checkout the [Force Login Wiki on GitHub](https://github.com/kevinvess/wp-force-
 
 = 4. How do I get the WordPress mobile app to work? =
 
-By default, the plugin blocks access to all page URLs; you will need to whitelist the XML-RPC page to allow the WordPress app to access your site for remote publishing.
+By default, the plugin blocks access to all page URLs; you may need to whitelist the XML-RPC page to allow the WordPress app to access your site for remote publishing.
 
 `
 /**
  * Filter Force Login to allow exceptions for specific URLs.
  *
  * @return array An array of URLs. Must be absolute.
- **/
+ */
 function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/xmlrpc.php' );
   return $whitelist;
