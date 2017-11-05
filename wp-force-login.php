@@ -67,3 +67,14 @@ function v_forcelogin() {
   }
 }
 add_action('template_redirect', 'v_forcelogin');
+
+function v_forcelogin_rest() {
+  if ( !is_user_logged_in() ) {
+    return new WP_Error(
+      'rest_unauthorized',
+      __( 'Sorry, you are not authorized to do that.', 'wp-force-login' ),
+      array( 'status' => 401 )
+    );
+  }
+}
+add_action('rest_request_before_callbacks','v_forcelogin_rest');
