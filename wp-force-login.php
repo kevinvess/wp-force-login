@@ -67,3 +67,16 @@ function v_forcelogin() {
   }
 }
 add_action('template_redirect', 'v_forcelogin');
+
+function v_forcelogin_rest_access( $result ) {
+  if ( !is_user_logged_in() ) {
+    return new WP_Error(
+      'rest_unauthorized',
+      __( 'Only authenticated users can access the REST API.', 'wp-force-login' ),
+      array( 'status' => rest_authorization_required_code() )
+    );
+  }
+
+  return $result;
+}
+add_filter( 'rest_authentication_errors', 'v_forcelogin_rest_access' );
