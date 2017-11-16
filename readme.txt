@@ -3,9 +3,10 @@ Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 2.7
-Tested up to: 4.7
-Stable tag: 5.0
+Tested up to: 4.9
+Stable tag: 5.1
 License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Force Login is a simple lightweight plugin that requires visitors to log in to interact with the website.
 
@@ -98,7 +99,7 @@ add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 
 = 3. How can I add exceptions for dynamic URLs? =
 
-Some URLs have unique query strings appended to the end of it, which is composed of a series of parameter-value pairs. 
+Some URLs have unique query strings appended to the end of it, which is composed of a series of parameter-value pairs.
 
 For example:
 <http://example.com/mypage/?parameter=value>
@@ -138,6 +139,10 @@ add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
 
 
 == Changelog ==
+
+= 5.1 =
+* Tweak - Restrict access to the REST API for authorized users only - props [Andrew Duthie](https://github.com/aduth).
+* Tweak - Added load_plugin_textdomain() to properly prepare for localization at translate.wordpress.org.
 
 = 5.0 =
 * Feature - Added filter to bypass Force Login redirect for whitelisting pages without specifying a URL.
@@ -184,6 +189,9 @@ add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
 
 
 == Upgrade Notice ==
+
+= 5.1 =
+Restricts access to the REST API for authorized users only.
 
 = 5.0 =
 New feature: added bypass filter. Tweak: changed hook for Force Login to run later.
