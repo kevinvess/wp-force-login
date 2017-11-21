@@ -97,6 +97,24 @@ function my_forcelogin_whitelist( $whitelist ) {
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 `
 
+**Whitelist API URLs**
+
+Each URL must be absolute (as in, <http://example.com/wp-json/mypage/>). Recommended: [site_url( '/wp-json/auth/' )](https://codex.wordpress.org/Function_Reference/site_url).
+
+`
+/**
+ * Filter Force Login to allow exceptions for specific URLs in the API.
+ *
+ * @return array An array of URLs. Must be absolute.
+ */
+function my_forcelogin_api_whitelist( $whitelist ) {
+  $whitelist[] = site_url( '/wp-json/auth/' );
+  $whitelist[] = site_url( '/wp-json/auth/validate/' );
+  return $whitelist;
+}
+add_filter('v_forcelogin_api_whitelist', 'my_forcelogin_whitelist', 10, 1);
+`
+
 = 3. How can I add exceptions for dynamic URLs? =
 
 Some URLs have unique query strings appended to the end of it, which is composed of a series of parameter-value pairs.
