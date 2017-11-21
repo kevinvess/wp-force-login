@@ -14,6 +14,25 @@ License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
+
+/**
+ * helper function for resolving url
+ */
+function v_forcelogin_get_url() {
+  $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
+  $url .= '://' . $_SERVER['HTTP_HOST'];
+  // port is prepopulated here sometimes
+  if ( strpos( $_SERVER['HTTP_HOST'], ':' ) === FALSE ) {
+    $url .= in_array( $_SERVER['SERVER_PORT'], array('80', '443') ) ? '' : ':' . $_SERVER['SERVER_PORT'];
+  }
+  $url .= $_SERVER['REQUEST_URI'];
+
+  return $url;
+}
+
+/*
+ * Restrict web for authorized users only
+ */
 function v_forcelogin() {
 
   // Exceptions for AJAX, Cron, or WP-CLI requests
@@ -24,13 +43,7 @@ function v_forcelogin() {
   // Redirect unauthorized visitors
   if ( !is_user_logged_in() ) {
     // Get URL
-    $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
-    $url .= '://' . $_SERVER['HTTP_HOST'];
-    // port is prepopulated here sometimes
-    if ( strpos( $_SERVER['HTTP_HOST'], ':' ) === FALSE ) {
-      $url .= in_array( $_SERVER['SERVER_PORT'], array('80', '443') ) ? '' : ':' . $_SERVER['SERVER_PORT'];
-    }
-    $url .= $_SERVER['REQUEST_URI'];
+    $url = v_forcelogin_get_url();
 
     // Apply filters
     $bypass = apply_filters( 'v_forcelogin_bypass', false );
@@ -57,7 +70,13 @@ add_action( 'template_redirect', 'v_forcelogin' );
  * Restrict REST API for authorized users only
  */
 function v_forcelogin_rest_access( $result ) {
-  if ( !is_user_logged_in() ) {
+  // Get URL
+  $url = v_forcelogin_get_url();
+  
+  // Apply filters
+  $whitelist = apply_filters( 'v_forcelogin_api_whitelist', array() );
+
+  if ( !is_user_logged_in() && !in_array($url, $whitelist) ) {
     return new WP_Error( 'rest_unauthorized', __( "Only authenticated users can access the REST API.", 'wp-force-login' ), array( 'status' => rest_authorization_required_code() ) );
   }
   return $result;
