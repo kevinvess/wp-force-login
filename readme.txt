@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=force
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 2.7
 Tested up to: 4.9
-Stable tag: 5.1
+Stable tag: 5.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,7 @@ Make your website private until it's ready to share publicly, or keep it private
 - Extensive Developer API (hooks & filters).
 - Customizable. Set a specific URL to always redirect to on login.
 - Filter exceptions for certain pages or posts.
+- Restrict REST API to authenticated users.
 - Translation Ready & WPML certified.
 
 **Bug Reports**
@@ -140,6 +141,9 @@ add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
 
 == Changelog ==
 
+= 5.1.1 =
+* Tweak - Improved the REST API restriction to allow alternative modes of authentication.
+
 = 5.1 =
 * Tweak - Restrict access to the REST API for authorized users only - props [Andrew Duthie](https://github.com/aduth).
 * Tweak - Added load_plugin_textdomain() to properly prepare for localization at translate.wordpress.org.
@@ -210,6 +214,3 @@ New features: added filters for customizing the plugin.
 
 = 2.0 =
 New feature: added redirect to send visitors back to the URL they tried to visit after logging-in.
-
-= 1.3 =
-Fixes bug with password reset URL from being blocked.
