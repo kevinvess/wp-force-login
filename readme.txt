@@ -98,6 +98,26 @@ function my_forcelogin_whitelist( $whitelist ) {
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
 `
 
+**Whitelist ID**
+
+Each ID must be INT
+
+`
+/**
+ * Filter Force Login to allow exceptions for specific ID.
+ *
+ * @return array An array of ID.
+ */
+function v_forcelogin_whitelistID( $whitelistID ) {
+	// list of page ID
+	$whitelistID[] = 63;
+  
+	return $whitelistID;
+  }
+  add_filter('v_forcelogin_whitelistID', 'v_forcelogin_whitelistID', 10, 1);
+`
+
+
 = 3. How can I add exceptions for dynamic URLs? =
 
 Some URLs have unique query strings appended to the end of it, which is composed of a series of parameter-value pairs.
@@ -140,6 +160,9 @@ add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
 
 
 == Changelog ==
+
+= 5.1.2 =
+* Feature - Added filter by Hotfirenet to compare the current ID page with array filter.
 
 = 5.1.1 =
 * Tweak - Improved the REST API restriction to allow alternative modes of authentication.
