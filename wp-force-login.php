@@ -3,7 +3,7 @@
 Plugin Name: Force Login
 Plugin URI: http://vess.me/
 Description: Easily hide your WordPress site from public viewing by requiring visitors to log in first. Activate to turn on.
-Version: 5.1.1
+Version: 5.1.2
 Author: Kevin Vess
 Author URI: http://vess.me/
 
@@ -35,10 +35,11 @@ function v_forcelogin() {
     // Apply filters
     $bypass = apply_filters( 'v_forcelogin_bypass', false );
     $whitelist = apply_filters( 'v_forcelogin_whitelist', array() );
+    $whitelistID = apply_filters( 'v_forcelogin_whitelistID', array() );
     $redirect_url = apply_filters( 'v_forcelogin_redirect', $url );
 
     // Redirect
-    if ( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) && !$bypass ) {
+    if ( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) && !in_array(get_the_ID(), $whitelistID) && !$bypass ) {
       wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit();
     }
   }
