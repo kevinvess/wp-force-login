@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Force Login
-Plugin URI: http://vess.me/
+Plugin URI: https://wordpress.org/plugins/wp-force-login/
 Description: Easily hide your WordPress site from public viewing by requiring visitors to log in first. Activate to turn on.
-Version: 5.1.1
+Version: 5.2
 Author: Kevin Vess
 Author URI: http://vess.me/
 
@@ -22,7 +22,7 @@ function v_forcelogin() {
   }
 
   // Redirect unauthorized visitors
-  if ( !is_user_logged_in() ) {
+  if ( ! is_user_logged_in() ) {
     // Get URL
     $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
     $url .= '://' . $_SERVER['HTTP_HOST'];
@@ -32,22 +32,26 @@ function v_forcelogin() {
     }
     $url .= $_SERVER['REQUEST_URI'];
 
-    // Apply filters
-    $bypass = apply_filters( 'v_forcelogin_bypass', false );
-    $whitelist = apply_filters( 'v_forcelogin_whitelist', array() );
-    $redirect_url = apply_filters( 'v_forcelogin_redirect', $url );
+    /**
+     * Bypass filters.
+     *
+     * @since 3.0.0 The `$whitelist` filter was added.
+     * @since 4.0.0 The `$bypass` filter was added.
+     * @since 5.2.0 The `$url` parameter was added.
+     */
+    $bypass = apply_filters( 'v_forcelogin_bypass', false, $url );
+    $whitelist = apply_filters( 'v_forcelogin_whitelist', array(), $url );
 
     // Redirect
-    if ( preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) && !$bypass ) {
-      wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit();
+    if ( preg_replace( '/\?.*/', '', $url ) != preg_replace( '/\?.*/', '', wp_login_url() ) && ! in_array( $url, $whitelist ) && ! $bypass ) {
+      $redirect_url = apply_filters( 'v_forcelogin_redirect', $url );
+      wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit;
     }
   }
-  else {
+  elseif ( function_exists('is_multisite') && is_multisite() ) {
     // Only allow Multisite users access to their assigned sites
-    if ( function_exists('is_multisite') && is_multisite() ) {
-      $current_user = wp_get_current_user();
-      if ( !is_user_member_of_blog( $current_user->ID ) && !is_super_admin() )
-        wp_die( __( "You're not authorized to access this site.", 'wp-force-login' ), get_option('blogname') . ' &rsaquo; ' . __( "Error", 'wp-force-login' ) );
+    if ( ! is_user_member_of_blog() && ! current_user_can('setup_network') ) {
+      wp_die( __( "You're not authorized to access this site.", 'wp-force-login' ), get_option('blogname') . ' &rsaquo; ' . __( "Error", 'wp-force-login' ) );
     }
   }
 }
@@ -56,11 +60,12 @@ add_action( 'template_redirect', 'v_forcelogin' );
 /**
  * Restrict REST API for authorized users only
  *
+ * @since 5.1.0
  * @param WP_Error|null|bool $result WP_Error if authentication error, null if authentication
  *                              method wasn't used, true if authentication succeeded.
  */
 function v_forcelogin_rest_access( $result ) {
-  if ( null === $result && !is_user_logged_in() ) {
+  if ( null === $result && ! is_user_logged_in() ) {
     return new WP_Error( 'rest_unauthorized', __( "Only authenticated users can access the REST API.", 'wp-force-login' ), array( 'status' => rest_authorization_required_code() ) );
   }
   return $result;

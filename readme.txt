@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=force
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 2.7
 Tested up to: 4.9
-Stable tag: 5.1.1
+Stable tag: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,7 +45,7 @@ Upload the Force Login plugin to your site, then Activate it.
 
 By default, the plugin sends visitors back to the URL they tried to visit. However, you can set a specific URL to always redirect users to by adding the following filter to your functions.php file.
 
-The URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
+The URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [home_url( '/mypage/' )](https://developer.wordpress.org/reference/functions/home_url/).
 
 `
 /**
@@ -54,14 +54,14 @@ The URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [si
  * @return string URL to redirect to on login. Must be absolute.
  */
 function my_forcelogin_redirect() {
-  return site_url( '/mypage/' );
+  return home_url( '/mypage/' );
 }
-add_filter('v_forcelogin_redirect', 'my_forcelogin_redirect', 10, 1);
+add_filter( 'v_forcelogin_redirect', 'my_forcelogin_redirect' );
 `
 
 = 2. How can I add exceptions for certain pages or posts? =
 
-You can bypass Force Login based on any condition or specify an array of URLs to whitelist by adding either of the following filters to your functions.php file. You may also use the WordPress [Conditional Tags](http://codex.wordpress.org/Conditional_Tags).
+You can bypass Force Login based on any condition or specify an array of URLs to whitelist by adding either of the following filters to your functions.php file. You may also use the WordPress [Conditional Tags](https://developer.wordpress.org/themes/references/list-of-conditional-tags/).
 
 **Bypass Force Login**
 
@@ -69,7 +69,8 @@ You can bypass Force Login based on any condition or specify an array of URLs to
 /**
  * Bypass Force Login to allow for exceptions.
  *
- * @return bool Whether to disable Force Login. Default false.
+ * @param bool $bypass Whether to disable Force Login. Default false.
+ * @return bool
  */
 function my_forcelogin_bypass( $bypass ) {
   if ( is_single() ) {
@@ -77,25 +78,26 @@ function my_forcelogin_bypass( $bypass ) {
   }
   return $bypass;
 }
-add_filter('v_forcelogin_bypass', 'my_forcelogin_bypass', 10, 1);
+add_filter( 'v_forcelogin_bypass', 'my_forcelogin_bypass' );
 `
 
 **Whitelist URLs**
 
-Each URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [site_url( '/mypage/' )](https://codex.wordpress.org/Function_Reference/site_url).
+Each URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [home_url( '/mypage/' )](https://developer.wordpress.org/reference/functions/home_url/).
 
 `
 /**
  * Filter Force Login to allow exceptions for specific URLs.
  *
- * @return array An array of URLs. Must be absolute.
+ * @param array $whitelist An array of URLs. Must be absolute.
+ * @return array
  */
 function my_forcelogin_whitelist( $whitelist ) {
-  $whitelist[] = site_url( '/mypage/' );
-  $whitelist[] = site_url( '/2015/03/post-title/' );
+  $whitelist[] = home_url( '/mypage/' );
+  $whitelist[] = home_url( '/2015/03/post-title/' );
   return $whitelist;
 }
-add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
+add_filter( 'v_forcelogin_whitelist', 'my_forcelogin_whitelist' );
 `
 
 = 3. How can I add exceptions for dynamic URLs? =
@@ -115,13 +117,14 @@ By default, the plugin blocks access to all page URLs; you may need to whitelist
 /**
  * Filter Force Login to allow exceptions for specific URLs.
  *
- * @return array An array of URLs. Must be absolute.
+ * @param array $whitelist An array of URLs. Must be absolute.
+ * @return array
  */
 function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/xmlrpc.php' );
   return $whitelist;
 }
-add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
+add_filter( 'v_forcelogin_whitelist', 'my_forcelogin_whitelist' );
 `
 
 = 5. How do I hide the "← Back to {sitename}" link on the login screen? =
@@ -135,14 +138,19 @@ The WordPress login screen includes a "← Back to {sitename}" link below the lo
 function my_forcelogin_hide_backtoblog() {
   echo '<style type="text/css">#backtoblog{display:none;}</style>';
 }
-add_action('login_enqueue_scripts', 'my_forcelogin_hide_backtoblog');
+add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 `
 
 
 == Changelog ==
 
+= 5.2 =
+* Feature - Added $url parameter to bypass and whitelist filters.
+* Tweak - Updated Multisite conditionals which determine user access to sites.
+* Tweak - Moved 'v_forcelogin_redirect' filter to improve performance.
+
 = 5.1.1 =
-* Tweak - Improved the REST API restriction to allow alternative modes of authentication.
+* Fix - Improved the REST API restriction to allow alternative modes of authentication.
 
 = 5.1 =
 * Tweak - Restrict access to the REST API for authorized users only - props [Andrew Duthie](https://github.com/aduth).
