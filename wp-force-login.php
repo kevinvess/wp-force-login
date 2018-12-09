@@ -44,8 +44,14 @@ function v_forcelogin() {
 
     // Redirect
     if ( preg_replace( '/\?.*/', '', $url ) != preg_replace( '/\?.*/', '', wp_login_url() ) && ! in_array( $url, $whitelist ) && ! $bypass ) {
+      // Determine redirect URL
       $redirect_url = apply_filters( 'v_forcelogin_redirect', $url );
-      wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit;
+      // Set the headers to prevent caching for the different browsers
+      nocache_headers();
+      // Redirect
+      wp_safe_redirect( wp_login_url( $redirect_url ), 302 );
+      // Stop PHP for the redirect to occur
+      exit;
     }
   }
   elseif ( function_exists('is_multisite') && is_multisite() ) {
