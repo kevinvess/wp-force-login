@@ -40,9 +40,9 @@ function v_forcelogin() {
 		 * @since 5.2.0 The `$url` parameter was added.
 		 */
 		$bypass = apply_filters( 'v_forcelogin_bypass', false, $url );
-		$whitelist = apply_filters( 'v_forcelogin_whitelist', array(), $url );
+		$whitelist = apply_filters( 'v_forcelogin_whitelist', array() );
 
-		if ( preg_replace( '/\?.*/', '', $url ) != preg_replace( '/\?.*/', '', wp_login_url() ) && ! in_array( $url, $whitelist ) && ! $bypass ) {
+		if ( preg_replace( '/\?.*/', '', $url ) !== preg_replace( '/\?.*/', '', wp_login_url() ) && ! $bypass && ! in_array( $url, $whitelist ) ) {
 			// Determine redirect URL
 			$redirect_url = apply_filters( 'v_forcelogin_redirect', $url );
 			// Set the headers to prevent caching
