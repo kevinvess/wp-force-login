@@ -27,8 +27,8 @@ function v_forcelogin() {
 		$url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
 		$url .= '://' . $_SERVER['HTTP_HOST'];
 		// port is prepopulated here sometimes
-		if ( strpos( $_SERVER['HTTP_HOST'], ':' ) === FALSE ) {
-			$url .= in_array( $_SERVER['SERVER_PORT'], array('80', '443') ) ? '' : ':' . $_SERVER['SERVER_PORT'];
+		if ( strpos( $_SERVER['HTTP_HOST'], ':' ) === false ) {
+			$url .= in_array( $_SERVER['SERVER_PORT'], array( '80', '443' ) ) ? '' : ':' . $_SERVER['SERVER_PORT'];
 		}
 		$url .= $_SERVER['REQUEST_URI'];
 
@@ -39,7 +39,7 @@ function v_forcelogin() {
 		 * @since 4.0.0 The `$bypass` filter was added.
 		 * @since 5.2.0 The `$url` parameter was added.
 		 */
-		$bypass = apply_filters( 'v_forcelogin_bypass', false, $url );
+		$bypass    = apply_filters( 'v_forcelogin_bypass', false, $url );
 		$whitelist = apply_filters( 'v_forcelogin_whitelist', array() );
 
 		if ( preg_replace( '/\?.*/', '', $url ) !== preg_replace( '/\?.*/', '', wp_login_url() ) && ! $bypass && ! in_array( $url, $whitelist ) ) {
@@ -48,13 +48,13 @@ function v_forcelogin() {
 			// Set the headers to prevent caching
 			nocache_headers();
 			// Redirect
-			wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit;
+			wp_safe_redirect( wp_login_url( $redirect_url ), 302 );
+			exit;
 		}
-	}
-	elseif ( function_exists('is_multisite') && is_multisite() ) {
+	} elseif ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		// Only allow Multisite users access to their assigned sites
-		if ( ! is_user_member_of_blog() && ! current_user_can('setup_network') ) {
-			wp_die( __( "You're not authorized to access this site.", 'wp-force-login' ), get_option('blogname') . ' &rsaquo; ' . __( "Error", 'wp-force-login' ) );
+		if ( ! is_user_member_of_blog() && ! current_user_can( 'setup_network' ) ) {
+			wp_die( __( "You're not authorized to access this site.", 'wp-force-login' ), get_option( 'blogname' ) . ' &rsaquo; ' . __( 'Error', 'wp-force-login' ) );
 		}
 	}
 }
@@ -66,10 +66,12 @@ add_action( 'template_redirect', 'v_forcelogin' );
  * @since 5.1.0
  * @param WP_Error|null|bool $result WP_Error if authentication error, null if authentication
  *                              method wasn't used, true if authentication succeeded.
+ *
+ * @return WP_Error|null|bool
  */
 function v_forcelogin_rest_access( $result ) {
 	if ( null === $result && ! is_user_logged_in() ) {
-		return new WP_Error( 'rest_unauthorized', __( "Only authenticated users can access the REST API.", 'wp-force-login' ), array( 'status' => rest_authorization_required_code() ) );
+		return new WP_Error( 'rest_unauthorized', __( 'Only authenticated users can access the REST API.', 'wp-force-login' ), array( 'status' => rest_authorization_required_code() ) );
 	}
 	return $result;
 }
