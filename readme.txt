@@ -1,4 +1,4 @@
-Update readme.txt to describe ne=== Force Login ===
+=== Force Login ===
 Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
@@ -241,4 +241,3 @@ New features: added filters for customizing the plugin.
 
 = 2.0 =
 New feature: added redirect to send visitors back to the URL they tried to visit after logging-in.
-w option
