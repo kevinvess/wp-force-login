@@ -51,7 +51,7 @@ function v_forcelogin() {
 			wp_safe_redirect( wp_login_url( $redirect_url ), 302 ); exit;
 		}
 	}
-	elseif ( function_exists('is_multisite') && is_multisite() ) {
+	elseif ( apply_filters( 'v_forcelogin_multisite_members_only', true ) && function_exists('is_multisite') && is_multisite() ) {
 		// Only allow Multisite users access to their assigned sites
 		if ( ! is_user_member_of_blog() && ! current_user_can('setup_network') ) {
 			wp_die( __( "You're not authorized to access this site.", 'wp-force-login' ), get_option('blogname') . ' &rsaquo; ' . __( "Error", 'wp-force-login' ) );
