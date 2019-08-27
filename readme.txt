@@ -147,7 +147,7 @@ By default, when used in a multisite setup, each site requires authenication and
 
 `
 /**
- * Filter Force Login to allow require or unrequire multisite users to be members of the site they are trying to access.
+ * Filter Force Login to check that multisite users are members of the site they are trying to access.
  *
  * @return bool
  */
