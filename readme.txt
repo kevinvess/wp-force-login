@@ -1,4 +1,4 @@
-=== Force Login ===
+Update readme.txt to describe ne=== Force Login ===
 Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
@@ -141,6 +141,21 @@ function my_forcelogin_hide_backtoblog() {
 add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 `
 
+= 6. How do I disable the requirement for users to be members of the site they are authenticating to for Multisite Setups?
+
+By default, when used in a multisite setup, each site requires authenication and only members of a given site have access to view the site.
+
+`
+/**
+ * Filter Force Login to allow require or unrequire multisite users to be members of the site they are trying to access.
+ *
+ * @return bool
+ */
+function my_forcelogin_multisite_members_only() {
+  return false;
+}
+add_filter( 'v_forcelogin_multisite_members_only', 'my_forcelogin_multisite_members_only' );
+`
 
 == Changelog ==
 
@@ -226,3 +241,4 @@ New features: added filters for customizing the plugin.
 
 = 2.0 =
 New feature: added redirect to send visitors back to the URL they tried to visit after logging-in.
+w option
