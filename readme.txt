@@ -3,8 +3,8 @@ Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 2.7
-Tested up to: 5.1
-Stable tag: 5.3
+Tested up to: 5.4
+Stable tag: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,9 +51,10 @@ The URL must be absolute (as in, <http://example.com/mypage/>). Recommended: [ho
 /**
  * Set the URL to redirect to on login.
  *
- * @return string URL to redirect to on login. Must be absolute.
+ * @param string $url The visited URL.
+ * @return string The URL to redirect to on login. Must be absolute.
  */
-function my_forcelogin_redirect() {
+function my_forcelogin_redirect( $url ) {
   return home_url( '/mypage/' );
 }
 add_filter( 'v_forcelogin_redirect', 'my_forcelogin_redirect' );
@@ -144,8 +145,12 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 
 == Changelog ==
 
+= 5.4 =
+* Tweak - Improved the visited $url variable.
+* Tweak - Changed code to comply with WordPress standards - props [Alex Bordei](https://github.com/kevinvess/wp-force-login/pull/43).
+
 = 5.3 =
-* Feature - Added nocache_headers() to prevent caching for the different browsers - props [Chris Harmoney](https://github.com/charmoney).
+* Feature - Added nocache_headers() to prevent caching for the different browsers - props [Chris Harmoney](https://github.com/kevinvess/wp-force-login/pull/42).
 * Tweak - Removed $url parameter from whitelist filter.
 
 = 5.2 =
@@ -157,13 +162,13 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 * Fix - Improved the REST API restriction to allow alternative modes of authentication.
 
 = 5.1 =
-* Tweak - Restrict access to the REST API for authorized users only - props [Andrew Duthie](https://github.com/aduth).
+* Tweak - Restrict access to the REST API for authorized users only - props [Andrew Duthie](https://github.com/kevinvess/wp-force-login/pull/34).
 * Tweak - Added load_plugin_textdomain() to properly prepare for localization at translate.wordpress.org.
 
 = 5.0 =
 * Feature - Added filter to bypass Force Login redirect for whitelisting pages without specifying a URL.
 * Tweak - Changed the hook for Force Login to run at a later stage in the WordPress tree.
-* Fix - Replaced deprecated function - props [Just-Johnny](https://github.com/Just-Johnny).
+* Fix - Replaced deprecated function - props [Just-Johnny](https://github.com/kevinvess/wp-force-login/issues/26).
 
 = 4.2 =
 * Tweak - Made plugin translation ready.
@@ -176,26 +181,26 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 * Fix - Only allow Multisite users access to their assigned sites.
 
 = 3.3 =
-* Fix - Check for existence of explicit port number before appending port - props [Björn Ali Göransson](https://github.com/bjorn-ali-goransson).
+* Fix - Check for existence of explicit port number before appending port - props [Björn Ali Göransson](https://github.com/kevinvess/wp-force-login/pull/10).
 
 = 3.2 =
 * Tweak - Removed v_getUrl() function to reduce possible duplicates of global functions - props [Joachim Happel](https://github.com/johappel).
 
 = 3.1 =
-* Fix - Rewrote v_getUrl() function to use HTTP_HOST instead of SERVER_NAME - props [Arlen22](https://github.com/Arlen22).
+* Fix - Rewrote v_getUrl() function to use HTTP_HOST instead of SERVER_NAME - props [Arlen22](https://github.com/kevinvess/wp-force-login/issues/7).
 
 = 3.0 =
 * Feature - Added filter to set a specific URL to redirect to on login.
 * Feature - Added filter to allow whitelisting of additional URLs.
 
 = 2.1 =
-* Fix - Rewrote v_getUrl function to include the server port - props [Nicolas](http://profiles.wordpress.org/nottavi).
+* Fix - Rewrote v_getUrl function to include the server port - props [Nicolas](https://wordpress.org/support/topic/infinite-loop-when-server-port-is-not-standard/).
 
 = 2.0 =
 * Feature - Added redirect to send visitors back to the URL they tried to visit after logging in.
 
 = 1.3 =
-* Fix - Fixed password reset URL from being blocked - props [estebillan](http://profiles.wordpress.org/estebillan).
+* Fix - Fixed password reset URL from being blocked - props [estebillan](https://wordpress.org/support/topic/password-reset-url-is-blocked/).
 
 = 1.2 =
 * Tweak - Streamlined code
