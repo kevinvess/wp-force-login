@@ -84,11 +84,13 @@ add_filter( 'v_forcelogin_bypass', 'my_forcelogin_bypass', 10, 2 );
 Some URLs have unique query strings appended to the end of it, which is composed of a series of parameter-value pairs.
 
 For example:
-`//example.com/mypage/?parameter=value`
+`
+//example.com/mypage/?parameter=value
+`
 
 Checkout the [Force Login Wiki on GitHub](https://github.com/kevinvess/wp-force-login/wiki/Bypass-Dynamic-URLs) for examples of the different methods for allowing dynamic URLs.
 
-= 4. How do I hide the "← Back to {sitename}" link on the login screen? =
+= 4. How do I hide the "← Back to {sitename}" link? =
 
 The WordPress login screen includes a "← Back to {sitename}" link below the login form; which may not actually take you back to the site while Force Login is activated. You can hide this link by adding the following action to your functions.php file.
 
