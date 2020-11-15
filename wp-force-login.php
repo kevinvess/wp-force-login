@@ -3,7 +3,7 @@
 Plugin Name: Force Login
 Plugin URI: https://wordpress.org/plugins/wp-force-login/
 Description: Easily hide your WordPress site from public viewing by requiring visitors to log in first. Activate to turn on.
-Version: 5.4
+Version: 5.5
 Author: Kevin Vess
 Author URI: http://vess.me/
 
@@ -28,16 +28,27 @@ function v_forcelogin() {
 		$url = $schema . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 		/**
-		 * Bypass filters.
+		 * Whitelist filter.
 		 *
-		 * @since 3.0.0 The `$whitelist` filter was added.
-		 * @since 4.0.0 The `$bypass` filter was added.
-		 * @since 5.2.0 The `$url` parameter was added.
+		 * @since 3.0.0
+		 * @deprecated 5.5.0 Use {@see 'v_forcelogin_bypass'} instead.
+		 *
+		 * @param array An array of absolute URLs.
 		 */
-		$bypass    = apply_filters( 'v_forcelogin_bypass', false, $url );
-		$whitelist = apply_filters( 'v_forcelogin_whitelist', array() );
+		$allowed = apply_filters_deprecated( 'v_forcelogin_whitelist', array( array() ), '5.5.0', 'v_forcelogin_bypass' );
 
-		if ( preg_replace( '/\?.*/', '', $url ) !== preg_replace( '/\?.*/', '', wp_login_url() ) && ! $bypass && ! in_array( $url, $whitelist ) ) {
+		/**
+		 * Bypass filter.
+		 *
+		 * @since 5.0.0
+		 * @since 5.2.0 Added the `$url` parameter.
+		 *
+		 * @param bool Whether to disable Force Login. Default false.
+		 * @param string $url The visited URL.
+		 */
+		$bypass = apply_filters( 'v_forcelogin_bypass', in_array( $url, $allowed ), $url );
+
+		if ( preg_replace( '/\?.*/', '', $url ) !== preg_replace( '/\?.*/', '', wp_login_url() ) && ! $bypass ) {
 			// Determine redirect URL
 			$redirect_url = apply_filters( 'v_forcelogin_redirect', $url );
 			// Set the headers to prevent caching

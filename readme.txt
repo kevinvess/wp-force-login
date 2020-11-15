@@ -2,9 +2,9 @@
 Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
-Requires at least: 2.7
+Requires at least: 4.6
 Tested up to: 5.5
-Stable tag: 5.4
+Stable tag: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,9 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 
 == Changelog ==
 
+= 5.5 =
+* Tweak - Deprecated whitelist filter, use v_forcelogin_bypass instead.
+
 = 5.4 =
 * Tweak - Improved the visited $url variable.
 * Tweak - Changed code to comply with WordPress standards - props [Alex Bordei](https://github.com/kevinvess/wp-force-login/pull/43).
@@ -172,6 +175,9 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 
 
 == Upgrade Notice ==
+
+= 5.5 =
+Deprecated whitelist filter, use v_forcelogin_bypass instead.
 
 = 5.1 =
 Restricts access to the REST API for authorized users only.
