@@ -3,8 +3,8 @@ Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 4.6
-Tested up to: 5.5
-Stable tag: 5.5
+Tested up to: 5.7
+Stable tag: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,18 +79,9 @@ function my_forcelogin_bypass( $bypass, $visited_url ) {
 add_filter( 'v_forcelogin_bypass', 'my_forcelogin_bypass', 10, 2 );
 `
 
-= 3. How can I add exceptions for dynamic URLs? =
+Checkout the [Force Login Wiki on GitHub](https://github.com/kevinvess/wp-force-login/wiki/Bypass-Dynamic-URLs) for additional examples of some different methods for allowing dynamic URLs.
 
-Some URLs have unique query strings appended to the end of it, which is composed of a series of parameter-value pairs.
-
-For example:
-`
-//example.com/mypage/?parameter=value
-`
-
-Checkout the [Force Login Wiki on GitHub](https://github.com/kevinvess/wp-force-login/wiki/Bypass-Dynamic-URLs) for examples of the different methods for allowing dynamic URLs.
-
-= 4. How do I hide the "← Back to {sitename}" link? =
+= 3. How do I hide the "← Back to {sitename}" link? =
 
 The WordPress login screen includes a "← Back to {sitename}" link below the login form; which may not actually take you back to the site while Force Login is activated. You can hide this link by adding the following action to your functions.php file.
 
@@ -106,6 +97,10 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 
 
 == Changelog ==
+
+= 5.6 =
+* Feature - Added filter for Multisite unauthorized error message.
+* Tweak - Allow logged-in Multisite users to access bypassed pages of other sites.
 
 = 5.5 =
 * Tweak - Deprecated whitelist filter, use v_forcelogin_bypass instead.
