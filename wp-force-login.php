@@ -3,7 +3,7 @@
 Plugin Name: Force Login
 Plugin URI: https://wordpress.org/plugins/wp-force-login/
 Description: Easily hide your WordPress site from public viewing by requiring visitors to log in first. Activate to turn on.
-Version: 5.6.1
+Version: 5.6.2
 Author: Kevin Vess
 Author URI: http://vess.me/
 
@@ -29,6 +29,11 @@ function v_forcelogin() {
 	// Get visited URL
 	$schema = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https://' : 'http://';
 	$url = $schema . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+	// Bail if visiting the login URL. Fix for custom login URLs
+	if ( wp_login_url() === preg_replace( '/\?.*/', '', $url ) ) {
+		return;
+	}
 
 	/**
 	 * Whitelist filter.
