@@ -3,8 +3,8 @@ Contributors: kevinvess
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=forcelogin%40vess%2eme&lc=US&item_name=Force%20Login%20for%20WordPress&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 4.6
-Tested up to: 5.7
-Stable tag: 5.6.2
+Tested up to: 5.8
+Stable tag: 5.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,7 @@ You may also use the WordPress [Conditional Tags](https://developer.wordpress.or
  * @return bool
  */
 function my_forcelogin_bypass( $bypass, $visited_url ) {
+
   // Allow all single posts
   if ( is_single() ) {
     $bypass = true;
@@ -97,6 +98,9 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 
 
 == Changelog ==
+
+= 5.6.3 =
+* Fix - Fixed issue for sites with a custom login URL.
 
 = 5.6.2 =
 * Fix - Fixed issue for sites with a custom login URL.
