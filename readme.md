@@ -1,10 +1,22 @@
 # Force Login #
 
-Force Login is a simple lightweight WordPress plugin that requires visitors to log in as a registered user to interact with the website. As simple as flipping a switch.
+![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/wp-force-login?label=Force%20Login)
+![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/wp-force-login?label=WordPress&logo=wordpress)
+
+A simple lightweight WordPress plugin that require visitors to log in to interact with the website. As simple as flipping a switch.
 
 Make your website private until it's ready to share publicly, or keep it private for members only.
 
-Here, you can browse the source of the [Force Login Plugin](https://wordpress.org/plugins/wp-force-login/) project, find and discuss open issues or contribute code to the plugin yourself.
+**Features**
+
+* WordPress Multisite compatible.
+* Login redirects visitors back to the url they tried to visit.
+* Extensive Developer API (hooks & filters).
+* Customizable. Set a specific URL to always redirect to on login.
+* Filter exceptions for certain pages or posts.
+* Translation Ready & WPML certified.
+
+View the source of the [Force Login Plugin](https://wordpress.org/plugins/wp-force-login/) project at WordPress.org.
 
 Installation
 ------------
