@@ -5,7 +5,7 @@ Plugin URI: https://wordpress.org/plugins/wp-force-login/
 Description: Easily hide your WordPress site from public viewing by requiring visitors to log in first. Activate to turn on.
 Version: 5.6.3
 Author: Kevin Vess
-Author URI: http://vess.me/
+Author URI: https://brightlightmedia.co/
 
 Text Domain: wp-force-login
 Domain Path: /languages
