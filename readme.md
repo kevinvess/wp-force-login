@@ -22,10 +22,11 @@ Installation
 ------------
 
 Here's a [guide on how to install the plugin in your WordPress site](https://wordpress.org/plugins/wp-force-login/installation/).
-If you want to run the latest development version, you have two options:
+If you want to run the latest development version, you have three options:
 
 * You can download the repository .zip file: [force-login.zip](https://github.com/kevinvess/wp-force-login/archive/master.zip)
 * You can clone the GitHub repository using Git
+* You can require it with Composer using [WordPress Packagist](https://wpackagist.org/)
 
 This will download the latest development version of the Force Login plugin. While this version is usually stable,
 it is not recommended for use in a production environment.
