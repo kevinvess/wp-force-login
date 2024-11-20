@@ -71,6 +71,21 @@ function my_forcelogin_bypass( $bypass, $visited_url ) {
 add_filter( 'v_forcelogin_bypass', 'my_forcelogin_bypass', 10, 2 );
 `
 
+To bypass Force Login on any REST requests, please use a seperate filter.
+
+`
+/**
+ * Bypass Force Login for REST requests.
+ *
+ * @param bool $bypass Whether to disable Force Login for REST requests. Default false.
+ * @return bool
+ */
+
+function my_forcelogin_bypass_rest($bypass) {
+    return true;
+}
+add_filter('v_forcelogin_bypass_rest', 'my_forcelogin_bypass_rest', 10, 2);
+
 Check out the [Force Login Wiki on GitHub](https://github.com/kevinvess/wp-force-login/wiki) for additional examples to allow URLs to be publicly accessible.
 
 = 3. How do I hide the "← Back to {sitename}" link? =

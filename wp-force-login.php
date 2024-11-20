@@ -92,6 +92,18 @@ add_action( 'template_redirect', 'v_forcelogin' );
  * @return WP_Error|null|bool
  */
 function v_forcelogin_rest_access( $result ) {
+	
+	/**
+	 * Bypass filter for REST access.
+	 *
+	 * @param bool Whether to disable Force Login for REST requests. Default false.
+	 */
+	$bypass = apply_filters( 'v_forcelogin_bypass_rest', false);
+
+	// Bail if bypass is enabled for REST
+	if ( $bypass ) {
+		return;
+	}
 	if ( null === $result && ! is_user_logged_in() ) {
 		return new WP_Error( 'rest_unauthorized', __( 'Only authenticated users can access the REST API.', 'wp-force-login' ), array( 'status' => rest_authorization_required_code() ) );
 	}
