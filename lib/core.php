@@ -36,6 +36,22 @@ function v_forcelogin() {
 		return;
 	}
 
+	$parsed = parse_url( $url );
+	$path = isset( $parsed['path'] ) ? trim( $parsed['path'], '/' ) : '';
+
+	if ( ! empty( $parsed['query'] ) ) {
+		$path = $path ? $path . '?' . $parsed['query'] : '?' . $parsed['query'];
+	}
+
+	$path_rules = apply_filters( 'v_forcelogin_path_whitelist', array(), $path, $url );
+	$path_rules = array_merge( $path_rules, (array) get_option( V_FORCELOGIN_OPTION, array() ) );
+
+	foreach ( $path_rules as $rule ) {
+		if ( v_forcelogin_path_matches_rule( $path, $rule ) ) {
+			return;
+		}
+	}
+
 	/**
 	 * Whitelist filter. (DEPRECATED)
 	 *
@@ -103,4 +119,26 @@ function v_forcelogin_rest_access( $result ) {
  */
 function v_forcelogin_load_textdomain() {
 	load_plugin_textdomain( 'wp-force-login', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+/**
+ * Check if a path matches a wildcard rule
+ *
+ * Supports wildcard patterns:
+ * - `*` matches exactly one path segment
+ * - `**` matches multiple path segments
+ *
+ * @since 5.6.4
+ * @param string $path The path to test
+ * @param string $rule The wildcard rule pattern
+ * @return bool True if path matches rule
+ */
+function v_forcelogin_path_matches_rule( $path, $rule ) {
+	$rule  = trim( $rule, '/' );
+	$regex = preg_quote( $rule, '#' );
+	$regex = str_replace( '\*\*', '(.+)', $regex );
+	$regex = str_replace( '\*', '[^/]+', $regex );
+	$regex = '#^' . $regex . '$#';
+
+	return (bool) preg_match( $regex, $path );
 }
