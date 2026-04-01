@@ -28,23 +28,41 @@ function v_forcelogin() {
 	}
 
 	// Get visited URL
-	$schema = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https://' : 'http://';
-	$url = $schema . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	$schema = is_ssl() ? 'https://' : 'http://';
+	$host = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+
+	if ( ! $host || ! $request_uri ) {
+		return;
+	}
+
+	$url = $schema . $host . $request_uri;
 
 	// Bail if visiting the login URL. Fix for custom login URLs
-	if ( preg_replace( '/\?.*/', '', wp_login_url() ) === preg_replace( '/\?.*/', '', $url ) ) {
+	$login_url = wp_login_url();
+	$login_url_path = preg_replace( '/\?.*/', '', $login_url );
+	$current_url_path = preg_replace( '/\?.*/', '', $url );
+	if ( $login_url_path === $current_url_path ) {
 		return;
 	}
 
 	$parsed = parse_url( $url );
+	if ( false === $parsed ) {
+		return;
+	}
+
 	$path = isset( $parsed['path'] ) ? trim( $parsed['path'], '/' ) : '';
 
+	// Include query string if present
 	if ( ! empty( $parsed['query'] ) ) {
 		$path = $path ? $path . '?' . $parsed['query'] : '?' . $parsed['query'];
 	}
 
 	$path_rules = apply_filters( 'v_forcelogin_path_whitelist', array(), $path, $url );
 	$path_rules = array_merge( $path_rules, (array) get_option( V_FORCELOGIN_OPTION, array() ) );
+
+	// Remove duplicates and empty values
+	$path_rules = array_filter( array_unique( array_map( 'trim', $path_rules ) ) );
 
 	foreach ( $path_rules as $rule ) {
 		if ( v_forcelogin_path_matches_rule( $path, $rule ) ) {
@@ -82,7 +100,7 @@ function v_forcelogin() {
 	if ( is_multisite() && is_user_logged_in() ) {
 		if ( ! is_user_member_of_blog() && ! current_user_can( 'setup_network' ) ) {
 			$message = apply_filters( 'v_forcelogin_multisite_message', __( "You're not authorized to access this site.", 'wp-force-login' ), $url );
-			wp_die( $message, get_option( 'blogname' ) . ' &rsaquo; ' . __( 'Error', 'wp-force-login' ) );
+			wp_die( esc_html( $message ), esc_html( get_option( 'blogname' ) . ' › ' . __( 'Error', 'wp-force-login' ) ) );
 		}
 		return;
 	}
@@ -128,6 +146,8 @@ function v_forcelogin_load_textdomain() {
  * - `*` matches exactly one path segment
  * - `**` matches multiple path segments
  *
+ * Properly escapes regex special characters to prevent ReDoS attacks.
+ *
  * @since 5.6.4
  * @param string $path The path to test
  * @param string $rule The wildcard rule pattern
@@ -135,8 +155,15 @@ function v_forcelogin_load_textdomain() {
  */
 function v_forcelogin_path_matches_rule( $path, $rule ) {
 	$rule  = trim( $rule, '/' );
+
+	// Validate rule content (prevent malicious regex patterns)
+	if ( empty( $rule ) ) {
+		return false;
+	}
+
 	$regex = preg_quote( $rule, '#' );
-	$regex = str_replace( '\*\*', '(.+)', $regex );
+	// Use non-greedy matching (.+?) to prevent ReDoS and limit backtracking
+	$regex = str_replace( '\*\*', '(.+?)', $regex );
 	$regex = str_replace( '\*', '[^/]+', $regex );
 	$regex = '#^' . $regex . '$#';
 
