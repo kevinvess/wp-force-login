@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=force
 Tags: privacy, private, protected, registered only, restricted, access, closed, force user login, hidden, login, password
 Requires at least: 4.6
 Tested up to: 6.7
-Stable tag: 5.6.3
+Stable tag: 5.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,12 @@ add_action( 'login_enqueue_scripts', 'my_forcelogin_hide_backtoblog' );
 
 
 == Changelog ==
+
+= 5.6.4 =
+* Feature - Added admin-settings page for bypassing Force Login on specific URLs.
+* Feature - Added filter bypass for allowing pages.
+* Tweak - Move core to separate file.
+* Tweak - Updated plugin to use constants instead of global variables.
 
 = 5.6.3 =
 * Fix - Fixed issue for sites with a custom login URL.
